@@ -1,5 +1,6 @@
 import numpy as np
 import tkinter as tk
+from tkinter import ttk as ttk
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
@@ -150,16 +151,22 @@ input_tdur = inputter(controls, "Time duration", 365)
 tk.Button(controls, text="Plot", command=onclick).pack()
 controls.pack(side = "left")
 
+tabz = ttk.Notebook()
+tabz.pack(side = "right", expand=True, fill=tk.BOTH)
+
 timeplot_area = tk.Frame()
-timeplot_area.pack(side = "right", expand=True, fill=tk.BOTH)
+#timeplot_area.pack(side = "right", expand=True, fill=tk.BOTH)
+tabz.add(timeplot_area, text = "Time plot")
 
 boxplot_area = tk.Frame()
-boxplot_area.pack(side = "right", expand=True, fill=tk.BOTH)
+#boxplot_area.pack(side = "right", expand=True, fill=tk.BOTH)
+tabz.add(boxplot_area, text = "Box plot")
 
 summary_area = tk.Text(wrap='word', height=10, width=40)
 summary_area.insert(tk.END, "No content rendered.")
 summary_area.config(state='disabled')
-summary_area.pack(side = "right", expand=True, fill=tk.BOTH)
+#summary_area.pack(side = "right", expand=True, fill=tk.BOTH)
+tabz.add(summary_area, text = "Summary")
 
 def run_on_start(*args):
     root.unbind('<Visibility>')
