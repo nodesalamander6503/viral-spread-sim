@@ -35,12 +35,14 @@ However, you can not modify a starting condition in a shock.
 ## Profitability Modeling
 
 The simulator provides economic outputs using your configured advertising and funnel assumptions:
-	- Spending per time step
-	- Earnings per time step
-	- Net profit per time step
+
+- Spending per time step
+- Earnings per time step
+- Net profit per time step
 It depends on parameters:
-	- Cost of advertising to the entire population
-	- Population reach boundary (maximum proportion of populace to advertise to)
+
+- Cost of advertising to the entire population
+- Population reach boundary (maximum proportion of populace to advertise to)
 
 ## Plots
 
@@ -75,21 +77,23 @@ The numerical results can also be accessed in the summary.
 
 # Interpretation
 
-	- **Converts**: Individuals who adopt and may promote the meme/product.
-	- **Deniers**: Individuals who actively reject the meme/product but still influence others.
-	- **Unreached**: Individuals with no exposure so far.
-	- **Economic plots** show whether the campaign becomes profitable given the parameters.
-	- **Shock system** helps model major publicity events, algorithm changes, scandals, or policy shifts.
+- **Converts**: Individuals who adopt and may promote the meme/product.
+- **Deniers**: Individuals who actively reject the meme/product but still influence others.
+- **Unreached**: Individuals with no exposure so far.
+- **Economic plots** show whether the campaign becomes profitable given the parameters.
+- **Shock system** helps model major publicity events, algorithm changes, scandals, or policy shifts.
 
 # See Also
 
 This README is intentionally minimal.
 I am missing data about:
-	- Parameter meanings
-	- Mathematical model (ODEs or update rules)
-	- Economic formulas
-	- Installation / dependencies
-	- Example runs and screenshots
+
+- Parameter meanings
+- Mathematical model (ODEs or update rules)
+- Economic formulas
+- Installation / dependencies
+- Example runs and screenshots
+
 The core codebase is primarily dependent on the Euclidean approximation and Reimann sum algorithm.
 These are used to facilitate advanced time-series simulation without needing to first calculate integrals or derivatives or solve a system of differential equations.
 All the other parts were made by following the documentation.
