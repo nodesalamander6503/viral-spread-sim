@@ -81,6 +81,28 @@ class Parameters(object):
         index = self.times.index(stime)
         p = self.timeparameters[index][name]
         return p
+    def vary(self, degrees, distance = 4):
+        degrees_keys = list(degrees.keys())
+        mods = [-distance for i in range(len(degrees) * len(self.times))]
+        skipchange = True
+        for i in range(len(degrees) * len(self.times) * (distance * 2 + 1)):
+            if not skipchange:
+                for j in range(len(mods)):
+                    if mods[j] == distance:
+                        mods[j] = - distance
+                        continue
+                    mods[j] += 1
+                    break
+            skipchange = False
+            newparams = Parameters()
+            for timeindex in range(len(self.times)):
+                newparam = {}
+                for k, name in enumerate(degrees_keys):
+                    _ = self.timeparameters[timeindex][name] + (mods[timeindex * len(self.times) + k] * degrees[name] / distance)
+                    _ = max(0, min(1, _))
+                    newparam[name] = _
+                newparams.add(self.times[timeindex], newparam)
+            yield newparams
 def calc(C0, D0, parameters, tdur, step = 0.01):
     U0 = 1 - C0 - D0
     U = [U0]
@@ -137,12 +159,38 @@ def onclick():
     timeplot = FigureCanvasTkAgg(fig, master=timeplot_area)
     timeplot_widget = timeplot.get_tk_widget()
     timeplot_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-    _U, _C, _D = U[-1], C[-1], D[-1] # preserve it!!
-    return
+    _U, _C, _D = U[-1], C[-1], D[-1] # we need this
+    poolU = []
+    poolC = []
+    poolD = []
+    for params in parameters.vary({"Cexp": 0.01, "Dexp": 0.01, "nice": 0.1, "reach": 0.05}):
+        T, U, C, D = calc(C0, D0, params, tdur)
+        poolU.append(U[-1])
+        poolC.append(C[-1])
+        poolD.append(D[-1])
+    U = np.array(U)
+    C = np.array(C)
+    D = np.array(D)
+    for i in boxplot_area.winfo_children(): i.destroy()
+    fig = render_boxplots([poolU, poolC, poolD], ["Unreached", "Converts", "Deniers"])
+    boxplot = FigureCanvasTkAgg(fig, master=boxplot_area)
+    boxplot_widget = boxplot.get_tk_widget()
+    boxplot_widget.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
+    arrays = [U,C,D]
+    expect = [_U,_C,_D]
     update()
-    # well look
-    # the main spectacle is the graph
-    # we can handle the advanced math™ subsequently, see
+    labels = ["Unreached", "Converts", "Deniers"]
+    summary = ""
+    for i in range(3):
+        summary += "We expect the proportion of the population who are " + labels[i] + " to cumulate as " + percent(expect[i]) + ". Across the distribution of simulations, the mean was " + percent(arrays[i].mean()) + " and a standard deviation of " + percent(arrays[i].std()) + ".\n\n"
+    summary_area.config(state='normal')
+    summary_area.delete(1.0, tk.END)
+    summary_area.insert(tk.END, summary)
+    summary_area.config(state='disabled')
+    print(summary)
+    update()
+
+"""
     C0_off = 0.005
     D0_off = 0.005
     Cexp_off = 0.005
@@ -174,16 +222,7 @@ def onclick():
     D = np.array(D)
     arrays = [U,C,D]
     expect = [_U,_C,_D]
-    labels = ["Unreached", "Converts", "Deniers"]
-    summary = ""
-    for i in range(3):
-        summary += "We expect the proportion of the population who are " + labels[i] + " to cumulate as " + percent(expect[i]) + ". Across the distribution of simulations, the mean was " + percent(arrays[i].mean()) + " and a standard deviation of " + percent(arrays[i].std()) + ".\n\n"
-    summary_area.config(state='normal')
-    summary_area.delete(1.0, tk.END)
-    summary_area.insert(tk.END, summary)
-    summary_area.config(state='disabled')
-    print(summary)
-    update()
+"""
 
 def clonetoshock():
     pass
