@@ -2,9 +2,9 @@
 
 This tool simulates the spread of a meme, product, or idea through a population and estimates profitability under different marketing and advertising conditions. It extends a basic compartmental model (Unreached -> Converts / Deniers) with optional economic shocks and paid-advertising dynamics.
 
-## Features
+# Systems
 
-### Initial Conditions
+## Initial Conditions
 
 Since this is based on a system of differential equations, it requires some starting parameters.
 
@@ -12,7 +12,7 @@ First, we must know the starting population proportions.
 The user specifies the proportion of population that are converts, and the proportion that are deniers.
 The proportion that are unreached is assumed to be the remainder.
 
-### Basic Parameters
+## Basic Parameters
 
 The simulation is dependent on several parameters.
 
@@ -22,14 +22,18 @@ We treat these as non-uniform to account for differences in opinion.
 However, you can disable communication for a population by setting their coefficient to zero.
 You can also treat the exposure coefficients as uniform by setting them to the same value.
 
-### Economic Shock
+## Economic Shock
 
 You can introduce a one-time economic shock (that is, a change to the system's parameters) in order to model the effects of some decision.
 This model assumes that these decisions are instantaneous, as though modeled by Heaviside step function.
 
 Shocks are optional and are toggled in their menu.
 
-### Profitability Modeling
+You can modify any parameter in a shock.
+However, you can not modify a starting condition in a shock.
+
+## Profitability Modeling
+
 The simulator provides economic outputs using your configured advertising and funnel assumptions:
 	- Spending per time step
 	- Earnings per time step
@@ -38,7 +42,7 @@ It depends on parameters:
 	- Cost of advertising to the entire population
 	- Population reach boundary (maximum proportion of populace to advertise to)
 
-### Plots
+## Plots
 
 The simulation generates three plots.
 
@@ -57,7 +61,7 @@ It then uses these Monte Carlo simulations to discern a predicted range of resul
 This range is visualized in the box-and-whisker plot.
 The numerical results can also be accessed in the summary.
 
-## Usage Overview
+# Usage Overview
 
 1. Enter initial conditions in the **Basic Controls** tab.
 2. Adjust exposure, fondness, and advertisement parameters as needed.
@@ -69,7 +73,7 @@ The numerical results can also be accessed in the summary.
 5. Use the **Box plot** tab to evaluate outcome variability across many runs, each with very small variations in parameters.
 6. Review the **Summary** tab for aggregated metrics.
 
-## Interpretation
+# Interpretation
 
 	- **Converts**: Individuals who adopt and may promote the meme/product.
 	- **Deniers**: Individuals who actively reject the meme/product but still influence others.
@@ -77,7 +81,7 @@ The numerical results can also be accessed in the summary.
 	- **Economic plots** show whether the campaign becomes profitable given the parameters.
 	- **Shock system** helps model major publicity events, algorithm changes, scandals, or policy shifts.
 
-## See Also
+# See Also
 
 This README is intentionally minimal.
 I am missing data about:
