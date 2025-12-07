@@ -5,24 +5,29 @@ This tool simulates the spread of a meme, product, or idea through a population 
 ## Features
 
 ### Initial Conditions
-Specify:
-	- Starting fraction of Converts
-	- Starting fraction of Deniers
-	- The rest of the population is treated as Unreached
+
+Since this is based on a system of differential equations, it requires some starting parameters.
+
+First, we must know the starting population proportions.
+The user specifies the proportion of population that are converts, and the proportion that are deniers.
+The proportion that are unreached is assumed to be the remainder.
 
 ### Basic Parameters
-Control the behavior of the population via:
-	- Convert exposure coefficient
-	- Denier exposure coefficient
-	- Fondness rate (likelihood that someone who ceases to be an Unreached will become a Convert and not a Denier)
-	- Advertisement reach rate
-	- Simulation duration (in time steps)
+
+The simulation is dependent on several parameters.
+
+The exposure coefficients are the rate at which converts and deniers are able to autonomously reach the unreached, respectively.
+This is included because it is assumed that people talk naturally, and that this is one possible method for spreading a meme.
+We treat these as non-uniform to account for differences in opinion.
+However, you can disable communication for a population by setting their coefficient to zero.
+You can also treat the exposure coefficients as uniform by setting them to the same value.
 
 ### Economic Shock
-Optionally introduce a one-time structural change to the system:
-	- Enable/disable shock
-	- Choose shock time
-	- Override starting parameters
+
+You can introduce a one-time economic shock (that is, a change to the system's parameters) in order to model the effects of some decision.
+This model assumes that these decisions are instantaneous, as though modeled by Heaviside step function.
+
+Shocks are optional and are toggled in their menu.
 
 ### Profitability Modeling
 The simulator provides economic outputs using your configured advertising and funnel assumptions:
@@ -33,16 +38,24 @@ It depends on parameters:
 	- Cost of advertising to the entire population
 	- Population reach boundary (maximum proportion of populace to advertise to)
 
-### Time-Series Plots
-Generate dynamic graphs showing:
-	- Proportion of population in each bucket (Unreached, Converts, Deniers) over time
-	- Spending, earnings, and net profit over time
+### Plots
 
-### Box Plot via Monte Carlo simulations
-Run multiple simulations with randomized parameters (or noise) to obtain:
-	- Distribution of final adoption levels
-	- Spread of outcomes for Converts, Deniers, and Unreached
-	- Visualization of uncertainty in long-run adoption
+The simulation generates three plots.
+
+The population time-series plot gives you an idea of the state of the population at various points in time throughout the simulation.
+It contains one line for each stratum of society.
+
+The financial time-series plot indicates quantity spent, quantity earned, and net.
+Note that this plot shows the actual value and not the rates of change.
+At points where net is negative, the advertising campaign has lost money.
+
+Every time-series plot has a vertical dotted line at the point of a shock.
+This allows you to discern the effect that a shock has.
+
+The simulation automatically repeats all simulations with minor variations in parameters.
+It then uses these Monte Carlo simulations to discern a predicted range of results.
+This range is visualized in the box-and-whisker plot.
+The numerical results can also be accessed in the summary.
 
 ## Usage Overview
 
