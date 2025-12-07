@@ -2,6 +2,10 @@
 
 This tool simulates the spread of a meme, product, or idea through a population and estimates profitability under different marketing and advertising conditions. It extends a basic compartmental model (Unreached -> Converts / Deniers) with optional economic shocks and paid-advertising dynamics.
 
+The current version of the tool is in `4para-sim.py`.
+It is based on the code in `basic-sim.py`, which is far less powerful, but served as an initial proof-of-concept.
+I created `basic-sim.py` in about 2 hours, then upgraded it to `4para-sim.py` after finals.
+
 # Systems
 
 ## Initial Conditions
